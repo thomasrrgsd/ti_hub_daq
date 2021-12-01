@@ -1,0 +1,217 @@
+/*
+ * multimeter.c
+ *
+ * Description: INA226, used to measure voltage, current, and power. Can be setup to
+ *              measure resistance.
+ *
+ *    Registers   00h Configuration   - R/W
+ *                01h Shunt Voltage   - R       2.5 uV/bit
+ *                02h Bus Voltage     - R       1.25 mV/bit
+ *                03h Power           - R       25*(Current_LSB) W/bit
+ *                04h Current         - R       Current_LSB A/bit
+ *                05h Calibration     - R/W
+ *
+ * Note 1: The I2C that we are using is on pins 9(P6_5/SCL) and 10(P6_4/SDA).
+ *
+ * Note 2: INA226 booster address is h40. May be different, depending on A0 and A1 wiring.
+ *         The address is h40 for the TI DAQ project, with A0 and A1 grounded.
+ *
+ */
+
+#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
+#include "dma_ti82.h"
+#include "macros.h"
+#include "uart_ti82.h"
+
+    //Calibrate_Multimeter(DMM_CAL_VAL);    // Only needed for DMM.
+    //while(!Is_I2C_Ready());
+    //Configure_Multimeter(DMM_CONF_VAL);
+int     bus_voltage = 0;
+int     dmm_state = 0;
+int     dmm_values[5] = {0, 0, 0, 0, 0};
+char    dmm_value_select = 0; // 0 - Shunt, 1 - Bus, 2 - Power, 3 - Current, 4 - Unused
+uint8_t dmm_blob[7] = {4, 0, 0, 0, 0, 0, 0};
+uint16_t dmm_len = 7;
+
+// Move to separate header file.
+extern volatile char tx1_done;
+extern volatile char tx2_done;
+
+/*
+ * This function writes to the calibration register. Returns 1 if unsuccessful,
+ * returns 0 if calibration starts. Give it a 16b input.
+ *
+ */
+int Calibrate_Multimeter(unsigned int calibrate_value){
+
+    if(!Is_I2C_Ready()){    // I2C is not available, return 1
+        return 1;
+    }
+
+    unsigned char bytes[3] = {CAL_REG, 0x00, 0x00}; // Set up I2C write data
+    bytes[1] = (calibrate_value >> 8) & 0xFF;       // Send MSB then LSB
+    bytes[2] = calibrate_value & 0xFF;
+
+    I2C1_TX_RX(DMM_ADDR, bytes, 3, 0);              // Kick off I2C write
+
+    return 0;
+}
+
+int Configure_Multimeter(unsigned int configure_value){
+
+    if(!Is_I2C_Ready()){    // I2C is not available, return 1
+        return 1;
+    }
+
+    unsigned char bytes[3] = {CONF_REG, 0x00, 0x00}; // Set up I2C write data
+    bytes[1] = (configure_value >> 8) & 0xFF;       // Send MSB then LSB
+    bytes[2] = configure_value & 0xFF;
+
+    I2C1_TX_RX(DMM_ADDR, bytes, 3, 0);              // Kick off I2C write
+
+    return 0;
+}
+
+/*
+ * This function reads value at the specified register. If I2C is busy or
+ * if given an incorrect register value, returns 1. If I2C read is started,
+ * returns 0. Give it one of these options: SHUNTV, BUSV, POWER, CURRENT.
+ *
+ */
+int Read_Multimeter_Value(unsigned char this_register){
+
+    if(!Is_I2C_Ready()){    // I2C is not available, return 1
+        return 1;
+    }
+
+    unsigned char bytes[] = {0x00};
+
+    switch(this_register){
+    case SHUNTV:
+        dmm_value_select = 0;
+        bytes[0] = SHUNT_REG;
+        I2C1_TX_RX(DMM_ADDR, bytes, 1, 1);
+        return 0;
+    case BUSV:
+        dmm_value_select = 1;
+        bytes[0] = BUS_REG;
+        I2C1_TX_RX(DMM_ADDR, bytes, 1, 1);
+        return 0;
+    case POWER:
+        dmm_value_select = 2;
+        bytes[0] = POWER_REG;
+        I2C1_TX_RX(DMM_ADDR, bytes, 1, 1);
+        return 0;
+    case CURRENT:
+        dmm_value_select = 3;
+        bytes[0] = CURRENT_REG;
+        I2C1_TX_RX(DMM_ADDR, bytes, 1, 1);
+        return 0;
+    default:
+        return 1;
+    }
+}
+
+// ["0x0000","0x0000","0x0000"]
+// 0123456789012345678901234567   4567, 13 14 15 16, 22 23 24 25
+void Json_Dmm_Str(void){
+
+    char hexStr[32];
+    int  tempVal = 0;
+    int i = 0;
+    int j = 0;
+
+    for(i = 0; i < 32; i++){
+        hexStr[i] = '\0';
+    }
+
+    hexStr[0] = '[';
+    hexStr[1] = '\"';
+    hexStr[2] = '0';
+    hexStr[3] = 'x';
+    hexStr[8] = '\"';
+    hexStr[9] = ',';
+    hexStr[10] = '\"';
+    hexStr[11] = '0';
+    hexStr[12] = 'x';
+    hexStr[17] = '\"';
+    hexStr[18] = ',';
+    hexStr[19] = '\"';
+    hexStr[20] = '0';
+    hexStr[21] = 'x';
+    hexStr[26] = '\"';
+    hexStr[27] = ']';
+    hexStr[28] = 'p';
+    //hexStr[29] = '\r';
+    //hexStr[30] = '\n';
+
+    j = 4;
+    for(i = 3; i >= 0; i--){
+        tempVal = (dmm_values[1] >> (4*i)) & 0xF; // Bus
+        if(tempVal <= 9){
+            hexStr[j] = tempVal + 48;
+        }
+        else{
+            hexStr[j] = tempVal + 55;
+        }
+
+        tempVal = (dmm_values[3] >> (4*i)) & 0xF; // Current
+        if(tempVal <= 9){
+            hexStr[j+9] = tempVal + 48;
+        }
+        else{
+            hexStr[j+9] = tempVal + 55;
+        }
+
+        tempVal = (dmm_values[2] >> (4*i)) & 0xF; // Power
+        if(tempVal <= 9){
+            hexStr[j+18] = tempVal + 48;
+        }
+        else{
+            hexStr[j+18] = tempVal + 55;
+        }
+        j++;
+
+    }
+    TX_Debug(hexStr);
+}
+
+
+void Multimeter_Process(void){
+
+    TIMER_A0->CCTL[0] &= ~0x10;      // Disable compare value interrupt for channel 0
+    int i = 0;
+    for(i = 0; i < 10; i++){    // Let hardware boot up, replace with systick when able.
+        msDelay(1);
+    }
+    // Code for DMM.
+    switch(dmm_state){
+    case 0:
+        Read_Multimeter_Value(BUSV);
+        dmm_blob[2] = dmm_values[1] & 0xFF;
+        dmm_blob[1] = (dmm_values[1] & 0xFF00) >> 8;
+        dmm_state = 1;
+        break;
+    case 1:
+        Read_Multimeter_Value(CURRENT);
+        dmm_blob[4] = dmm_values[3] & 0xFF;
+        dmm_blob[3] = (dmm_values[3] & 0xFF00) >> 8;
+        dmm_state = 2;
+        break;
+    case 2:
+        Read_Multimeter_Value(POWER);
+        dmm_blob[6] = dmm_values[2] & 0xFF;
+        dmm_blob[5] = (dmm_values[2] & 0xFF00) >> 8;
+        dmm_state = 0;
+        break;
+    default:
+        break;
+    }
+
+    for(i = 0; i < 10; i++){    // Let hardware boot up, replace with systick when able.
+        msDelay(1);
+    }
+    TIMER_A0->CCTL[0] |=  0x10;      // Enable compare value interrupt for channel 0
+
+    Dma_Ch4_Uart2_Send_String(dmm_blob, dmm_len);
+}

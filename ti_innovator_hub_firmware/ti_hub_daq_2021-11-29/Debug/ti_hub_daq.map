@@ -1,0 +1,713 @@
+******************************************************************************
+                  TI ARM Linker PC v20.2.5                     
+******************************************************************************
+>> Linked Mon Nov 29 11:20:43 2021
+
+OUTPUT FILE NAME:   <ti_hub_daq.out>
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00002121
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  MAIN                  00000000   00040000  0000272b  0003d8d5  R  X
+  INFO                  00200000   00004000  00000000  00004000  R  X
+  SRAM_CODE             01000000   00010000  000018ae  0000e752  RW X
+  SRAM_DATA             20000000   00010000  000018ae  0000e752  RW  
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00000000    00000000    00002730   00002730    r-x
+  00000000    00000000    000000e4   000000e4    r-- .intvecs
+  000000e4    000000e4    000023aa   000023aa    r-x .text
+  0000248e    0000248e    00000005   00000005    r-- .const
+  00002498    00002498    00000298   00000298    r-- .cinit
+20000000    20000000    000016b0   00000000    rw-
+  20000000    20000000    0000123e   00000000    rw- .bss
+  20001240    20001240    00000470   00000000    rw- .data
+2000fe00    2000fe00    00000200   00000000    rw-
+  2000fe00    2000fe00    00000200   00000000    rw- .stack
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    00000000    000000e4     
+                  00000000    000000e4     startup_msp432p401r_ccs.obj (.intvecs:retain)
+
+.text      0    000000e4    000023aa     
+                  000000e4    00000370     fungen.obj (.text:Update_Signal_Array)
+                  00000454    00000210     msp432p4xx_driverlib.lib : dma.o (.text:DMA_assignChannel)
+                  00000664    000001a8     ports.obj (.text:Init_Port_1)
+                  0000080c    0000017a     main.obj (.text:main)
+                  00000986    00000002     adc.obj (.text:ADC14_IRQHandler)
+                  00000988    00000144     i2c_ti82.obj (.text:EUSCIB1_IRQHandler)
+                  00000acc    0000011c     multimeter.obj (.text:Multimeter_Process)
+                  00000be8    00000118     i2c_ti82.obj (.text:I2C1_TX_RX)
+                  00000d00    00000110     dma_ti82.obj (.text:DMA_INT0_IRQHandler)
+                  00000e10    00000104     logizer.obj (.text:UpdateLA)
+                  00000f14    000000fc     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_mul_t2.asm.obj (.text)
+                  00001010    000000f0     msp432p4xx_driverlib.lib : dma.o (.text:DMA_setChannelTransfer)
+                  00001100    000000e8     ports.obj (.text:Init_Port_2)
+                  000011e8    000000c4     ports.obj (.text:Init_Port_5)
+                  000012ac    000000bc     interrupts.obj (.text:EUSCIA0_IRQHandler)
+                  00001368    000000bc     uart_ti82.obj (.text:Init_UART0)
+                  00001424    000000b4     interrupts.obj (.text:EUSCIA2_IRQHandler)
+                  000014d8    000000ac     uart_ti82.obj (.text:Init_UART2)
+                  00001584    000000ac     multimeter.obj (.text:Read_Multimeter_Value)
+                  00001630    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
+                  000016cc    00000098     fungen.obj (.text:FunGen_Process)
+                  00001764    00000090     interrupts.obj (.text:Init_Interrupts)
+                  000017f4    00000088     i2c_ti82.obj (.text:Init_I2C)
+                  0000187c    0000007a     rtsv7M4_T_le_v4SPD16_eabi.lib : memset_t2.asm.obj (.text)
+                  000018f6    00000002     dma_ti82.obj (.text:DMA_INT3_IRQHandler)
+                  000018f8    00000078     dma_ti82.obj (.text:Init_DMA_CH2)
+                  00001970    00000078     dma_ti82.obj (.text:Init_DMA_CH3)
+                  000019e8    00000078     system_msp432p401r.obj (.text:SystemInit)
+                  00001a60    00000070     dma_ti82.obj (.text:Dma_Ch2_ADC_Ch6_Get_Data)
+                  00001ad0    00000070     dma_ti82.obj (.text:Dma_Ch3_ADC_Ch8_Get_Data)
+                  00001b40    00000070     dma_ti82.obj (.text:Dma_Ch5_RX2_Ready)
+                  00001bb0    00000070     ports.obj (.text:Init_Port_3)
+                  00001c20    00000070     uart_ti82.obj (.text:RX2_Command)
+                  00001c90    0000006e     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_tos_t2.asm.obj (.text)
+                  00001cfe    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00001d66    00000002     startup_msp432p401r_ccs.obj (.text:Default_Handler)
+                  00001d68    00000064     timers.obj (.text:TA0_N_IRQHandler)
+                  00001dcc    00000054     dma_ti82.obj (.text:Init_DMA_CH5)
+                  00001e20    00000054     fungen.obj (.text:Init_FunGen)
+                  00001e74    00000050     dma_ti82.obj (.text:Dma_Ch4_Uart2_Send_String)
+                  00001ec4    00000050     timers.obj (.text:msDelay)
+                  00001f14    00000048     timers.obj (.text:Init_TimerA0)
+                  00001f5c    00000048     interrupts.obj (.text:__NVIC_SetPriority)
+                  00001fa4    00000044     multimeter.obj (.text:Calibrate_Multimeter)
+                  00001fe8    00000044     adc.obj (.text:Init_ADC)
+                  0000202c    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  00002070    00000040     dma_ti82.obj (.text:Init_DMA)
+                  000020b0    0000003c     multimeter.obj (.text:Configure_Multimeter)
+                  000020ec    00000034     ports.obj (.text:Init_Port_4)
+                  00002120    00000034     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  00002154    00000030     dma_ti82.obj (.text:Init_DMA_CH0)
+                  00002184    00000030     timers.obj (.text:Init_TimerA1)
+                  000021b4    00000030     timers.obj (.text:TA0_0_IRQHandler)
+                  000021e4    00000030     interrupts.obj (.text:__NVIC_ClearPendingIRQ)
+                  00002214    00000030     interrupts.obj (.text:__NVIC_EnableIRQ)
+                  00002244    0000002c     dma_ti82.obj (.text:Init_DMA_CH4)
+                  00002270    0000002c     interrupts.obj (.text:PORT1_IRQHandler)
+                  0000229c    00000020     ports.obj (.text:Init_Ports)
+                  000022bc    00000020     fungen.obj (.text:Set_Active_Amp)
+                  000022dc    00000020     fungen.obj (.text:Set_Active_Bias)
+                  000022fc    00000020     uart_ti82.obj (.text:Set_Command_Value)
+                  0000231c    00000020     rtsv7M4_T_le_v4SPD16_eabi.lib : u_tofd_t2.asm.obj (.text)
+                  0000233c    0000001c     uart_ti82.obj (.text:Clear_Command)
+                  00002358    0000001c     msp432p4xx_driverlib.lib : dma.o (.text:DMA_clearInterruptFlag)
+                  00002374    0000001c     uart_ti82.obj (.text:Get_Command_Value)
+                  00002390    00000018     uart_ti82.obj (.text:Check_Command)
+                  000023a8    00000018     fungen.obj (.text:Set_Active_Channel)
+                  000023c0    00000018     fungen.obj (.text:Set_Active_Type)
+                  000023d8    00000018     timers.obj (.text:Set_Timer_Frequency)
+                  000023f0    00000014     dma_ti82.obj (.text:DMA_INT1_IRQHandler)
+                  00002404    00000014     dma_ti82.obj (.text:DMA_INT2_IRQHandler)
+                  00002418    00000010     timers.obj (.text:TA1_0_IRQHandler)
+                  00002428    0000000e     msp432p4xx_driverlib.lib : uart.o (.text:UART_getReceiveBufferAddressForDMA)
+                  00002436    0000000e                              : uart.o (.text:UART_getTransmitBufferAddressForDMA)
+                  00002444    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  00002452    00000002     ports.obj (.text:Init_Port_6)
+                  00002454    0000000c     msp432p4xx_driverlib.lib : dma.o (.text:DMA_getInterruptStatus)
+                  00002460    0000000c     i2c_ti82.obj (.text:Is_I2C_Ready)
+                  0000246c    0000000c     startup_msp432p401r_ccs.obj (.text:Reset_Handler)
+                  00002478    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  00002484    00000004                                   : pre_init.c.obj (.text:_system_pre_init)
+                  00002488    00000004                                   : exit.c.obj (.text:abort:abort)
+                  0000248c    00000002     ports.obj (.text:Init_Port_7)
+
+.const     0    0000248e    00000005     
+                  0000248e    00000003     multimeter.obj (.const:.string:$P$T0$1)
+                  00002491    00000002     dma_ti82.obj (.const:.string:$P$T0$1)
+
+.cinit     0    00002498    00000298     
+                  00002498    00000273     (.cinit..data.load) [load image, compression = lzss]
+                  0000270b    00000001     --HOLE-- [fill = 0]
+                  0000270c    0000000c     (__TI_handler_table)
+                  00002718    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00002720    00000010     (__TI_cinit_table)
+
+.init_array 
+*          0    00000000    00000000     UNINITIALIZED
+
+.binit     0    00000000    00000000     
+
+.bss       0    20000000    0000123e     UNINITIALIZED
+                  20000000    00000400     (.common:adc6_array_1)
+                  20000400    00000400     (.common:adc8_array_1)
+                  20000800    00000400     (.common:controlTable)
+                  20000c00    00000190     (.common:command_value)
+                  20000d90    00000098     (.common:command_buffer)
+                  20000e28    00000098     (.common:data_buffer)
+                  20000ec0    00000098     (.common:rx1_process)
+                  20000f58    00000098     (.common:rx1_ring_buffer)
+                  20000ff0    00000098     (.common:rx2_ring_buffer)
+                  20001088    00000098     (.common:tx1_process)
+                  20001120    00000098     (.common:tx2_process)
+                  200011b8    00000064     (.common:command_flag)
+                  2000121c    00000008     (.common:i2c_tx)
+                  20001224    00000004     (.common:rx1_ring_read)
+                  20001228    00000004     (.common:rx1_ring_write)
+                  2000122c    00000004     (.common:rx2_ring_read)
+                  20001230    00000004     (.common:rx2_ring_write)
+                  20001234    00000004     (.common:tx1_index)
+                  20001238    00000004     (.common:tx2_index)
+                  2000123c    00000001     (.common:tx1_done)
+                  2000123d    00000001     (.common:tx2_done)
+
+.data      0    20001240    00000470     UNINITIALIZED
+                  20001240    00000100     fungen.obj (.data:active_signal)
+                  20001340    00000100     fungen.obj (.data:saw_template)
+                  20001440    00000100     fungen.obj (.data:sine_template)
+                  20001540    00000100     fungen.obj (.data:square_template)
+                  20001640    00000014     dma_ti82.obj (.data)
+                  20001654    00000014     multimeter.obj (.data:dmm_values)
+                  20001668    00000010     i2c_ti82.obj (.data)
+                  20001678    0000000e     uart_ti82.obj (.data)
+                  20001686    0000000c     fungen.obj (.data)
+                  20001692    00000002     logizer.obj (.data:LA_blob)
+                  20001694    0000000c     multimeter.obj (.data)
+                  200016a0    00000007     multimeter.obj (.data:dmm_blob)
+                  200016a7    00000001     --HOLE--
+                  200016a8    00000004     logizer.obj (.data)
+                  200016ac    00000004     timers.obj (.data)
+
+.stack     0    2000fe00    00000200     UNINITIALIZED
+                  2000fe00    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
+                  2000fe04    000001fc     --HOLE--
+
+__llvm_prf_cnts 
+*          0    20000000    00000000     UNINITIALIZED
+
+MODULE SUMMARY
+
+       Module                        code   ro data   rw data
+       ------                        ----   -------   -------
+    .\
+       dma_ti82.obj                  1210   2         6488   
+       fungen.obj                    1228   0         2072   
+       uart_ti82.obj                 584    0         1652   
+       interrupts.obj                724    0         1252   
+       ports.obj                     1052   0         0      
+       i2c_ti82.obj                  752    0         48     
+       multimeter.obj                584    3         78     
+       timers.obj                    388    0         8      
+       main.obj                      378    0         0      
+       logizer.obj                   260    0         12     
+       system_msp432p401r.obj        120    0         0      
+       adc.obj                       70     0         0      
+    +--+-----------------------------+------+---------+---------+
+       Total:                        7350   5         11610  
+                                                             
+    .\ccs\
+       startup_msp432p401r_ccs.obj   14     228       0      
+    +--+-----------------------------+------+---------+---------+
+       Total:                        14     228       0      
+                                                             
+    C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/ccs/msp432p4xx_driverlib.lib
+       dma.o                         808    0         0      
+       uart.o                        28     0         0      
+    +--+-----------------------------+------+---------+---------+
+       Total:                        836    0         0      
+                                                             
+    C:\ti\ccs1040\ccs\tools\compiler\ti-cgt-arm_20.2.5.LTS\lib\rtsv7M4_T_le_v4SPD16_eabi.lib
+       fd_mul_t2.asm.obj             252    0         0      
+       memcpy_t2.asm.obj             156    0         0      
+       memset_t2.asm.obj             122    0         0      
+       fd_tos_t2.asm.obj             110    0         0      
+       copy_decompress_lzss.c.obj    104    0         0      
+       autoinit.c.obj                68     0         0      
+       boot_cortex_m.c.obj           52     0         0      
+       u_tofd_t2.asm.obj             32     0         0      
+       copy_decompress_none.c.obj    14     0         0      
+       copy_zero_init.c.obj          12     0         0      
+       exit.c.obj                    4      0         0      
+       pre_init.c.obj                4      0         0      
+    +--+-----------------------------+------+---------+---------+
+       Total:                        930    0         0      
+                                                             
+       Stack:                        0      0         1024   
+       Linker Generated:             0      663       0      
+    +--+-----------------------------+------+---------+---------+
+       Grand Total:                  9130   896       12634  
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 00002720 records: 2, size/record: 8, table size: 16
+	.data: load addr=00002498, load size=00000273 bytes, run addr=20001240, run size=00000470 bytes, compression=lzss
+	.bss: load addr=00002718, load size=00000008 bytes, run addr=20000000, run size=0000123e bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 0000270c records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_decompress_lzss
+	index: 1, handler: __TI_decompress_none
+	index: 2, handler: __TI_zero_init
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address   name                               
+-------   ----                               
+200016ac  A0_CCR2_flag                       
+00000987  ADC14_IRQHandler                   
+00000987  ADC14_IRQHandler                   
+00001d67  AES256_IRQHandler                  
+00001d67  BusFault_Handler                   
+00002489  C$$EXIT                            
+00001d67  COMP_E0_IRQHandler                 
+00001d67  COMP_E1_IRQHandler                 
+00001d67  CS_IRQHandler                      
+00001fa5  Calibrate_Multimeter               
+00002391  Check_Command                      
+0000233d  Clear_Command                      
+000020b1  Configure_Multimeter               
+00001d67  DMA_ERR_IRQHandler                 
+00000d01  DMA_INT0_IRQHandler                
+00000d01  DMA_INT0_IRQHandler                
+000023f1  DMA_INT1_IRQHandler                
+000023f1  DMA_INT1_IRQHandler                
+00002405  DMA_INT2_IRQHandler                
+00002405  DMA_INT2_IRQHandler                
+000018f7  DMA_INT3_IRQHandler                
+000018f7  DMA_INT3_IRQHandler                
+00000455  DMA_assignChannel                  
+00002359  DMA_clearInterruptFlag             
+00002455  DMA_getInterruptStatus             
+00001011  DMA_setChannelTransfer             
+00001d67  DebugMon_Handler                   
+00001d67  Default_Handler                    
+00001a61  Dma_Ch2_ADC_Ch6_Get_Data           
+00001ad1  Dma_Ch3_ADC_Ch8_Get_Data           
+00001e75  Dma_Ch4_Uart2_Send_String          
+00001b41  Dma_Ch5_RX2_Ready                  
+000012ad  EUSCIA0_IRQHandler                 
+000012ad  EUSCIA0_IRQHandler                 
+00001d67  EUSCIA1_IRQHandler                 
+00001425  EUSCIA2_IRQHandler                 
+00001425  EUSCIA2_IRQHandler                 
+00001d67  EUSCIA3_IRQHandler                 
+00001d67  EUSCIB0_IRQHandler                 
+00000989  EUSCIB1_IRQHandler                 
+00000989  EUSCIB1_IRQHandler                 
+00001d67  EUSCIB2_IRQHandler                 
+00001d67  EUSCIB3_IRQHandler                 
+00001d67  FLCTL_IRQHandler                   
+00001d67  FPU_IRQHandler                     
+000016cd  FunGen_Process                     
+00002375  Get_Command_Value                  
+00001d67  HardFault_Handler                  
+00000be9  I2C1_TX_RX                         
+00001fe9  Init_ADC                           
+00002071  Init_DMA                           
+00002155  Init_DMA_CH0                       
+000018f9  Init_DMA_CH2                       
+00001971  Init_DMA_CH3                       
+00002245  Init_DMA_CH4                       
+00001dcd  Init_DMA_CH5                       
+00001e21  Init_FunGen                        
+000017f5  Init_I2C                           
+00001765  Init_Interrupts                    
+00000665  Init_Port_1                        
+00001101  Init_Port_2                        
+00001bb1  Init_Port_3                        
+000020ed  Init_Port_4                        
+000011e9  Init_Port_5                        
+00002453  Init_Port_6                        
+0000248d  Init_Port_7                        
+0000229d  Init_Ports                         
+00001f15  Init_TimerA0                       
+00002185  Init_TimerA1                       
+00001369  Init_UART0                         
+000014d9  Init_UART2                         
+00002461  Is_I2C_Ready                       
+20001692  LA_blob                            
+200016aa  LA_len                             
+00001d67  MemManage_Handler                  
+00000acd  Multimeter_Process                 
+00001d67  NMI_Handler                        
+00001d67  PCM_IRQHandler                     
+00002271  PORT1_IRQHandler                   
+00002271  PORT1_IRQHandler                   
+00001d67  PORT2_IRQHandler                   
+00001d67  PORT3_IRQHandler                   
+00001d67  PORT4_IRQHandler                   
+00001d67  PORT5_IRQHandler                   
+00001d67  PORT6_IRQHandler                   
+00001d67  PSS_IRQHandler                     
+00001d67  PendSV_Handler                     
+00001d67  RTC_C_IRQHandler                   
+00001c21  RX2_Command                        
+00001585  Read_Multimeter_Value              
+0000246d  Reset_Handler                      
+00001d67  SVC_Handler                        
+000022bd  Set_Active_Amp                     
+000022dd  Set_Active_Bias                    
+000023a9  Set_Active_Channel                 
+000023c1  Set_Active_Type                    
+000022fd  Set_Command_Value                  
+000023d9  Set_Timer_Frequency                
+00001d67  SysTick_Handler                    
+000019e9  SystemInit                         
+00001d67  T32_INT1_IRQHandler                
+00001d67  T32_INT2_IRQHandler                
+00001d67  T32_INTC_IRQHandler                
+000021b5  TA0_0_IRQHandler                   
+000021b5  TA0_0_IRQHandler                   
+00001d69  TA0_N_IRQHandler                   
+00001d69  TA0_N_IRQHandler                   
+00002419  TA1_0_IRQHandler                   
+00002419  TA1_0_IRQHandler                   
+00001d67  TA1_N_IRQHandler                   
+00001d67  TA2_0_IRQHandler                   
+00001d67  TA2_N_IRQHandler                   
+00001d67  TA3_0_IRQHandler                   
+00001d67  TA3_N_IRQHandler                   
+00002429  UART_getReceiveBufferAddressForDMA 
+00002437  UART_getTransmitBufferAddressForDMA
+00000e11  UpdateLA                           
+000000e5  Update_Signal_Array                
+00001d67  UsageFault_Handler                 
+4000480c  WDTCTL_SYM                         
+00001d67  WDT_A_IRQHandler                   
+20010000  __STACK_END                        
+00000200  __STACK_SIZE                       
+00002720  __TI_CINIT_Base                    
+00002730  __TI_CINIT_Limit                   
+0000270c  __TI_Handler_Table_Base            
+00002718  __TI_Handler_Table_Limit           
+0000202d  __TI_auto_init_nobinit_nopinit     
+00001cff  __TI_decompress_lzss               
+00002445  __TI_decompress_none               
+ffffffff  __TI_pprof_out_hndl                
+ffffffff  __TI_prof_data_size                
+ffffffff  __TI_prof_data_start               
+00000000  __TI_static_base__                 
+00002479  __TI_zero_init                     
+00001c91  __aeabi_d2f                        
+00000f15  __aeabi_dmul                       
+0000187d  __aeabi_memclr                     
+0000187d  __aeabi_memclr4                    
+0000187d  __aeabi_memclr8                    
+00001631  __aeabi_memcpy                     
+00001631  __aeabi_memcpy4                    
+00001631  __aeabi_memcpy8                    
+0000187f  __aeabi_memset                     
+0000187f  __aeabi_memset4                    
+0000187f  __aeabi_memset8                    
+0000231d  __aeabi_ui2d                       
+ffffffff  __binit__                          
+ffffffff  __c_args__                         
+UNDEFED   __mpu_init                         
+2000fe00  __stack                            
+20000000  __start___llvm_prf_cnts            
+20000000  __stop___llvm_prf_cnts             
+00002121  _c_int00_noargs                    
+UNDEFED   _system_post_cinit                 
+00002485  _system_pre_init                   
+00002489  abort                              
+20001688  active_amp                         
+2000168c  active_bias                        
+2000168e  active_channel                     
+2000168a  active_freq                        
+20001240  active_signal                      
+20001686  active_type                        
+20001648  adc6_active_buffer                 
+20000000  adc6_array_1                       
+20001644  adc6_busy_1                        
+20001650  adc8_active_buffer                 
+20000400  adc8_array_1                       
+2000164c  adc8_busy_1                        
+ffffffff  binit                              
+20001694  bus_voltage                        
+20001680  click_counter                      
+20000d90  command_buffer                     
+20001642  command_buffer_index               
+20001643  command_buffer_read                
+200011b8  command_flag                       
+20000c00  command_value                      
+20000800  controlTable                       
+20000e28  data_buffer                        
+20001678  data_index                         
+20001640  dma_ch0_uart0_busy                 
+20001641  dma_ch4_uart2_busy                 
+200016a0  dmm_blob                           
+2000169e  dmm_len                            
+20001698  dmm_state                          
+2000169c  dmm_value_select                   
+20001654  dmm_values                         
+20001685  f_can_send_data                    
+20001684  f_esp_ready                        
+20001690  fun_index                          
+20001674  i2c_data                           
+20001671  i2c_read                           
+20001672  i2c_read_count                     
+2000121c  i2c_tx                             
+20001668  i2c_tx_index                       
+2000166c  i2c_tx_len                         
+20001670  i2c_tx_ready                       
+00000000  interruptVectors                   
+200016a8  logicChar                          
+0000080d  main                               
+00001631  memcpy                             
+00001885  memset                             
+00001ec5  msDelay                            
+2000167c  rx1_index                          
+20000ec0  rx1_process                        
+20000f58  rx1_ring_buffer                    
+20001224  rx1_ring_read                      
+20001228  rx1_ring_write                     
+20000ff0  rx2_ring_buffer                    
+2000122c  rx2_ring_read                      
+20001230  rx2_ring_write                     
+20001340  saw_template                       
+20001440  sine_template                      
+20001540  square_template                    
+200016ae  timer_freq                         
+2000123c  tx1_done                           
+20001234  tx1_index                          
+20001088  tx1_process                        
+2000123d  tx2_done                           
+20001238  tx2_index                          
+20001120  tx2_process                        
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address   name                               
+-------   ----                               
+00000000  __TI_static_base__                 
+00000000  interruptVectors                   
+000000e5  Update_Signal_Array                
+00000200  __STACK_SIZE                       
+00000455  DMA_assignChannel                  
+00000665  Init_Port_1                        
+0000080d  main                               
+00000987  ADC14_IRQHandler                   
+00000987  ADC14_IRQHandler                   
+00000989  EUSCIB1_IRQHandler                 
+00000989  EUSCIB1_IRQHandler                 
+00000acd  Multimeter_Process                 
+00000be9  I2C1_TX_RX                         
+00000d01  DMA_INT0_IRQHandler                
+00000d01  DMA_INT0_IRQHandler                
+00000e11  UpdateLA                           
+00000f15  __aeabi_dmul                       
+00001011  DMA_setChannelTransfer             
+00001101  Init_Port_2                        
+000011e9  Init_Port_5                        
+000012ad  EUSCIA0_IRQHandler                 
+000012ad  EUSCIA0_IRQHandler                 
+00001369  Init_UART0                         
+00001425  EUSCIA2_IRQHandler                 
+00001425  EUSCIA2_IRQHandler                 
+000014d9  Init_UART2                         
+00001585  Read_Multimeter_Value              
+00001631  __aeabi_memcpy                     
+00001631  __aeabi_memcpy4                    
+00001631  __aeabi_memcpy8                    
+00001631  memcpy                             
+000016cd  FunGen_Process                     
+00001765  Init_Interrupts                    
+000017f5  Init_I2C                           
+0000187d  __aeabi_memclr                     
+0000187d  __aeabi_memclr4                    
+0000187d  __aeabi_memclr8                    
+0000187f  __aeabi_memset                     
+0000187f  __aeabi_memset4                    
+0000187f  __aeabi_memset8                    
+00001885  memset                             
+000018f7  DMA_INT3_IRQHandler                
+000018f7  DMA_INT3_IRQHandler                
+000018f9  Init_DMA_CH2                       
+00001971  Init_DMA_CH3                       
+000019e9  SystemInit                         
+00001a61  Dma_Ch2_ADC_Ch6_Get_Data           
+00001ad1  Dma_Ch3_ADC_Ch8_Get_Data           
+00001b41  Dma_Ch5_RX2_Ready                  
+00001bb1  Init_Port_3                        
+00001c21  RX2_Command                        
+00001c91  __aeabi_d2f                        
+00001cff  __TI_decompress_lzss               
+00001d67  AES256_IRQHandler                  
+00001d67  BusFault_Handler                   
+00001d67  COMP_E0_IRQHandler                 
+00001d67  COMP_E1_IRQHandler                 
+00001d67  CS_IRQHandler                      
+00001d67  DMA_ERR_IRQHandler                 
+00001d67  DebugMon_Handler                   
+00001d67  Default_Handler                    
+00001d67  EUSCIA1_IRQHandler                 
+00001d67  EUSCIA3_IRQHandler                 
+00001d67  EUSCIB0_IRQHandler                 
+00001d67  EUSCIB2_IRQHandler                 
+00001d67  EUSCIB3_IRQHandler                 
+00001d67  FLCTL_IRQHandler                   
+00001d67  FPU_IRQHandler                     
+00001d67  HardFault_Handler                  
+00001d67  MemManage_Handler                  
+00001d67  NMI_Handler                        
+00001d67  PCM_IRQHandler                     
+00001d67  PORT2_IRQHandler                   
+00001d67  PORT3_IRQHandler                   
+00001d67  PORT4_IRQHandler                   
+00001d67  PORT5_IRQHandler                   
+00001d67  PORT6_IRQHandler                   
+00001d67  PSS_IRQHandler                     
+00001d67  PendSV_Handler                     
+00001d67  RTC_C_IRQHandler                   
+00001d67  SVC_Handler                        
+00001d67  SysTick_Handler                    
+00001d67  T32_INT1_IRQHandler                
+00001d67  T32_INT2_IRQHandler                
+00001d67  T32_INTC_IRQHandler                
+00001d67  TA1_N_IRQHandler                   
+00001d67  TA2_0_IRQHandler                   
+00001d67  TA2_N_IRQHandler                   
+00001d67  TA3_0_IRQHandler                   
+00001d67  TA3_N_IRQHandler                   
+00001d67  UsageFault_Handler                 
+00001d67  WDT_A_IRQHandler                   
+00001d69  TA0_N_IRQHandler                   
+00001d69  TA0_N_IRQHandler                   
+00001dcd  Init_DMA_CH5                       
+00001e21  Init_FunGen                        
+00001e75  Dma_Ch4_Uart2_Send_String          
+00001ec5  msDelay                            
+00001f15  Init_TimerA0                       
+00001fa5  Calibrate_Multimeter               
+00001fe9  Init_ADC                           
+0000202d  __TI_auto_init_nobinit_nopinit     
+00002071  Init_DMA                           
+000020b1  Configure_Multimeter               
+000020ed  Init_Port_4                        
+00002121  _c_int00_noargs                    
+00002155  Init_DMA_CH0                       
+00002185  Init_TimerA1                       
+000021b5  TA0_0_IRQHandler                   
+000021b5  TA0_0_IRQHandler                   
+00002245  Init_DMA_CH4                       
+00002271  PORT1_IRQHandler                   
+00002271  PORT1_IRQHandler                   
+0000229d  Init_Ports                         
+000022bd  Set_Active_Amp                     
+000022dd  Set_Active_Bias                    
+000022fd  Set_Command_Value                  
+0000231d  __aeabi_ui2d                       
+0000233d  Clear_Command                      
+00002359  DMA_clearInterruptFlag             
+00002375  Get_Command_Value                  
+00002391  Check_Command                      
+000023a9  Set_Active_Channel                 
+000023c1  Set_Active_Type                    
+000023d9  Set_Timer_Frequency                
+000023f1  DMA_INT1_IRQHandler                
+000023f1  DMA_INT1_IRQHandler                
+00002405  DMA_INT2_IRQHandler                
+00002405  DMA_INT2_IRQHandler                
+00002419  TA1_0_IRQHandler                   
+00002419  TA1_0_IRQHandler                   
+00002429  UART_getReceiveBufferAddressForDMA 
+00002437  UART_getTransmitBufferAddressForDMA
+00002445  __TI_decompress_none               
+00002453  Init_Port_6                        
+00002455  DMA_getInterruptStatus             
+00002461  Is_I2C_Ready                       
+0000246d  Reset_Handler                      
+00002479  __TI_zero_init                     
+00002485  _system_pre_init                   
+00002489  C$$EXIT                            
+00002489  abort                              
+0000248d  Init_Port_7                        
+0000270c  __TI_Handler_Table_Base            
+00002718  __TI_Handler_Table_Limit           
+00002720  __TI_CINIT_Base                    
+00002730  __TI_CINIT_Limit                   
+20000000  __start___llvm_prf_cnts            
+20000000  __stop___llvm_prf_cnts             
+20000000  adc6_array_1                       
+20000400  adc8_array_1                       
+20000800  controlTable                       
+20000c00  command_value                      
+20000d90  command_buffer                     
+20000e28  data_buffer                        
+20000ec0  rx1_process                        
+20000f58  rx1_ring_buffer                    
+20000ff0  rx2_ring_buffer                    
+20001088  tx1_process                        
+20001120  tx2_process                        
+200011b8  command_flag                       
+2000121c  i2c_tx                             
+20001224  rx1_ring_read                      
+20001228  rx1_ring_write                     
+2000122c  rx2_ring_read                      
+20001230  rx2_ring_write                     
+20001234  tx1_index                          
+20001238  tx2_index                          
+2000123c  tx1_done                           
+2000123d  tx2_done                           
+20001240  active_signal                      
+20001340  saw_template                       
+20001440  sine_template                      
+20001540  square_template                    
+20001640  dma_ch0_uart0_busy                 
+20001641  dma_ch4_uart2_busy                 
+20001642  command_buffer_index               
+20001643  command_buffer_read                
+20001644  adc6_busy_1                        
+20001648  adc6_active_buffer                 
+2000164c  adc8_busy_1                        
+20001650  adc8_active_buffer                 
+20001654  dmm_values                         
+20001668  i2c_tx_index                       
+2000166c  i2c_tx_len                         
+20001670  i2c_tx_ready                       
+20001671  i2c_read                           
+20001672  i2c_read_count                     
+20001674  i2c_data                           
+20001678  data_index                         
+2000167c  rx1_index                          
+20001680  click_counter                      
+20001684  f_esp_ready                        
+20001685  f_can_send_data                    
+20001686  active_type                        
+20001688  active_amp                         
+2000168a  active_freq                        
+2000168c  active_bias                        
+2000168e  active_channel                     
+20001690  fun_index                          
+20001692  LA_blob                            
+20001694  bus_voltage                        
+20001698  dmm_state                          
+2000169c  dmm_value_select                   
+2000169e  dmm_len                            
+200016a0  dmm_blob                           
+200016a8  logicChar                          
+200016aa  LA_len                             
+200016ac  A0_CCR2_flag                       
+200016ae  timer_freq                         
+2000fe00  __stack                            
+20010000  __STACK_END                        
+4000480c  WDTCTL_SYM                         
+ffffffff  __TI_pprof_out_hndl                
+ffffffff  __TI_prof_data_size                
+ffffffff  __TI_prof_data_start               
+ffffffff  __binit__                          
+ffffffff  __c_args__                         
+ffffffff  binit                              
+UNDEFED   __mpu_init                         
+UNDEFED   _system_post_cinit                 
+
+[221 symbols]
