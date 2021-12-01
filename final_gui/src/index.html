@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+
+<head>
+    <meta charset="UTF-8">
+    <title> TI Data Hub </title>
+	<link rel="icon" href="data:,">
+    <link href="dependencies/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="dependencies/moment.min.js"></script>
+    <script src="dependencies/chart.min.js"></script>
+    <script src="dependencies/chartjs-plugin-streaming.min.js"></script>
+    <script src="dependencies/jquery.slim.min.js"></script>
+    <script src="dependencies/popper.min.js"></script>
+    <script src="dependencies/bootstrap.min.js"></script>
+</head>
+
+<header>
+    <section id="header">
+        <nav class="navbar navbar-expand-lg navbar-light main-nav">
+            <a class="logo navbar-brand">
+                <img src="images/logo.png" alt="tilogo" class="img-responsive">
+            </a>
+    </section>
+</header>
+
+<body>
+<!-- Voltmeter section -->
+	<div class="row mt-1 mb-1 justify-content-center">
+		<div class="col-md-7 border-0 border-secondary">
+			<div class="row mt-1 mb-1 justify-content-center">
+				<div class="col-md-11 border border-secondary bg-white">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<h4 class="text-center"> Multimeter </h4>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-1 mb-1 justify-content-center">
+				<div class="col-md-8 border-0 border-secondary">					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm my-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												id="inputGroup-sizing-sm">Voltage</span>
+										</div>
+										<input disabled type="text" id="dmm_voltage"
+											class="form-control" aria-label="Small"
+											aria-describedby="amplitude-input" value="0.0 V">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm my-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text"
+										id="inputGroup-sizing-sm">Current   </span>
+								</div>
+								<input disabled type="text" id="dmm_current"
+									class="form-control" aria-label="Small" value="0.0 mA"
+									aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm my-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text"
+										id="inputGroup-sizing-sm">Resistance</span>
+								</div>
+								<input disabled type="text" id="dmm_resistance"
+									class="form-control" aria-label="Small" value="0 Ω"
+									aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm my-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text"
+										id="inputGroup-sizing-sm">Power</span>
+								</div>
+								<input disabled type="text" id="dmm_power" value="0.0 mW"
+									class="form-control" aria-label="Small"
+									aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-md-2 border-0 border-secondary">
+					<div class="row mt-4 mb-3 justify-content-center">
+								<button type="button" class="btn-settings btn-border pt-2 pb-2"
+									onclick="startDMM()">Start</button>
+					</div>
+					<div class="row mt-1 mb-1 justify-content-center">
+								<button type="button" class="btn-settings btn-border pt-2 pb-2"
+									onclick="stopDMM()">Stop</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Oscilloscope section -->	
+	<div class="row mt-3 mb-0 justify-content-center">
+		<div class="col-md-12 border border-3 border-bottom-0 border-danger">
+			<div class="row mt-3 mb-1 justify-content-center">
+				<div class="col-md-4 border-0 border-secondary">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary bg-white">
+							<h4 class="text-center"> Oscilloscope </h4>
+						</div>
+					</div>
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-10 border-0 border-secondary">
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="col-md-11 border-0 border-secondary bg-light">
+									<h6 class="text-center"> Channel 1 </h6>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Volt/Div</span>
+                                    </div>
+                                    <input id="voltDivCh1" type="text" onChange="updateVoltDivCh1()" value="1" class="form-control">
+									<div class="input-group-append">
+										<select id="voltDivUnitCh1" onChange="updateVoltUnitCh1(1)" class="form-select">
+											<option class="dropdown-item" value="mV">mV</option>
+											<option class="dropdown-item" value="V" selected>V</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Offset</span>
+                                    </div>
+                                    <input id="voltOffCh1" type="text" onChange="updateVoltOffCh1()" value="0" class="form-control">
+									<div class="input-group-append">
+										<select id="voltOffUnitCh1" onChange="updateVoltUnitCh1(0)" class="form-select">
+											<option class="dropdown-item" value="mV">mV</option>
+											<option class="dropdown-item" value="V" selected>V</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Time/Div</span>
+                                    </div>
+                                    <input id="timeDivOS" type="text" onChange="updateTimeDivOS()" value="0.05" class="form-control">
+									<div class="input-group-append">
+										<select id="timeUnitOS" onChange="updateTimeUnitOS()" class="form-select">
+											<option class="dropdown-item" value="uSec">uSec</option>
+											<option class="dropdown-item" value="mSec">mSec</option>
+											<option class="dropdown-item" value="Sec" selected>Sec</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="col-md-5 border-0 border-secondary">
+									<div class="row mt-4 mb-3 justify-content-center">
+													<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+														onclick="startOS1()">Start</button>
+									</div>
+								</div>
+								<div class="col-md-5 border-0 border-secondary">
+									<div class="row mt-4 mb-3 justify-content-center">
+												<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+													onclick="stopOS1()">Stop</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-10 border-0 border-secondary">
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="col-md-11 border-0 border-secondary bg-light">
+									<h6 class="text-center"> Channel 2 </h6>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Volt/Div</span>
+                                    </div>
+                                    <input id="voltDivCh2" type="text" onChange="updateVoltDivCh2()" value="1" class="form-control">
+									<div class="input-group-append">
+										<select id="voltDivUnitCh2" onChange="updateVoltUnitCh2(1)" class="form-select">
+											<option class="dropdown-item" value="mV">mV</option>
+											<option class="dropdown-item" value="V" selected>V</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Offset</span>
+                                    </div>
+                                    <input id="voltOffCh2" type="text" onChange="updateVoltOffCh2()" value="0" class="form-control">
+									<div class="input-group-append">
+										<select id="voltOffUnitCh2" onChange="updateVoltUnitCh2(0)" class="form-select">
+											<option class="dropdown-item" value="mV">mV</option>
+											<option class="dropdown-item" value="V" selected>V</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="input-group input-group-sm mb-0 mt-0">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Time/Div</span>
+                                    </div>
+                                    <input id="timeDivOS2" type="text" onChange="updateTimeDivOS2()" value="0.05" class="form-control">
+									<div class="input-group-append">
+										<select id="timeUnitOS2" onChange="updateTimeUnitOS2()" class="form-select">
+											<option class="dropdown-item" value="uSec">uSec</option>
+											<option class="dropdown-item" value="mSec">mSec</option>
+											<option class="dropdown-item" value="Sec" selected>Sec</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-1 mb-1 justify-content-center">
+								<div class="col-md-5 border-0 border-secondary">
+									<div class="row mt-4 mb-3 justify-content-center">
+													<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+														onclick="startOS2()">Start</button>
+									</div>
+								</div>
+								<div class="col-md-5 border-0 border-secondary">
+									<div class="row mt-4 mb-3 justify-content-center">
+												<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+													onclick="stopOS2()">Stop</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-8 border-0 border-secondary">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<canvas id="oscilloscopeChart" class="w-100 bg-dark-custom border border border-secondary"></canvas>
+						</div>
+					</div>
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<canvas id="oscilloscopeChart2" class="w-100 bg-dark-custom border border border-secondary"></canvas>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+		
+<!-- Function generator section -->
+	<div class="row mt-3 mb-0 justify-content-center">
+		<div class="col-md-12 border border-3 border-bottom-0 border-danger">
+			<div class="row mt-3 mb-0 justify-content-center">
+				<div class="col-md-4 border-0 border-secondary">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary bg-white">
+							<h4 class="text-center"> Function Generator </h4>
+						</div>
+					</div>
+
+					<div class="row mt-3 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm mb-0 mt-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Channel</span>
+								</div>
+								<select id="chFG" onchange="changeChFG()" class="form-select form-select-sm">
+									<option class="dropdown-item" value="1" selected>1
+									</option>
+									<option class="dropdown-item" value="2">2</option>
+									<option class="dropdown-item" value="3">3</option>
+									<option class="dropdown-item" value="4">4</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mt-3 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm mb-0 mt-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Type</span>
+								</div>
+								<select id="typeFG" onchange="updateTypeFG()" class="form-select form-select-sm">
+									<option class="dropdown-item" value="square" selected>Square</option>
+									<option class="dropdown-item" value="sine">Sine</option>
+									<option class="dropdown-item" value="sawtooth">Sawtooth</option>
+									<option class="dropdown-item" value="DC">DC</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mt-3 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm mb-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Frequency (Hz)</span>
+								</div>
+								<input type="text" id="freq-input" class="form-control"
+									aria-label="Small" aria-describedby="freq-input" value="1">
+								<input id="freqFG" onchange="updateFreqFG()" type="range" class="form-range" min="1" max="50" step="1"
+									value="1" id="freq-range">
+							</div>	
+						</div>
+					</div>
+					
+					<div class="row mt-2 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm mb-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Amplitude (V)</span>
+								</div>
+								<input type="text" id="amplitude-input-fg" class="form-control"
+									aria-label="Small" aria-describedby="amplitude-input-fg" value="1">
+								<input id="ampFG" onchange="updateAmpFG()" type="range" class="form-range" min="0.1" max="3.3" step="0.1"
+									value="1" id="amplitude-range">
+							</div>					
+						</div>
+					</div>
+					
+					<div class="row mt-2 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary">
+							<div class="input-group input-group-sm mb-0">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Bias (V)</span>
+								</div>
+								<input type="text" id="bias-input" class="form-control"
+									aria-label="Small" aria-describedby="bias-input"
+									value="1">
+								<input id="biasFG" onchange="updateBiasFG()" type="range" class="form-range" min="0.1" max="3.3" step="0.1"
+									value="1" id="bias-range">
+							</div>					
+						</div>
+					</div>
+
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-5 border-0 border-secondary">
+							<div class="row mt-4 mb-3 justify-content-center">
+											<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+												onclick="startFG()">Start</button>
+							</div>
+						</div>
+						<div class="col-md-5 border-0 border-secondary">
+							<div class="row mt-4 mb-3 justify-content-center">
+										<button type="button" class="btn-settings btn-border pt-2 pb-2 w-75"
+											onclick="stopFG()">Stop</button>
+							</div>
+						</div>
+					</div>			
+				</div>
+				
+				<div class="col-md-8 border-0 border-secondary">
+					<canvas id="idealChart" class="w-100 border bg-dark-custom border-secondary"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<!-- Logic Analyzer -->
+	<div class="row mt-3 mb-0 justify-content-center">
+		<div class="col-md-12 border border-3 border-bottom-0 border-danger">
+			<div class="row mt-3 mb-1 justify-content-center">
+				<div class="col-md-3 border-0 border-secondary">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-11 border-0 border-secondary bg-white">
+								<h4 class="text-center"> Logic Analyzer </h4>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(0)" id="channelToggle0"
+								class="btn-settings btn-border w-100">1</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(1)" id="channelToggle1"
+								class="btn-settings btn-border w-100">2</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(2)" id="channelToggle2"
+								class="btn-settings btn-border w-100">3</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(3)" id="channelToggle3"
+								class="btn-settings btn-border w-100">4</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(4)" id="channelToggle4"
+								class="btn-settings btn-border w-100">5</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(5)" id="channelToggle5"
+								class="btn-settings btn-border w-100">6</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(6)" id="channelToggle6"
+								class="btn-settings btn-border w-100">7</button>
+						</div>
+					</div>
+					
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-3 p-0 border border-dark">
+							<button onClick="hideChannel(7)" id="channelToggle7"
+								class="btn-settings btn-border w-100">8</button>
+						</div>
+					</div>
+					<div class="row mt-3 mb-1 justify-content-center">
+						<div class="col-md-6 p-0 border border-dark">
+							<button onClick="pauseAll()" id="pauseLA"
+								class="btn-settings btn-border w-100">Paused</button>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col-md-9 border-0 border-secondary">
+					<div class="row mt-1 mb-1 justify-content-center">
+						<div class="col-md-12 border-0 border-secondary">
+								<canvas id="channelChart" class="w-100 h-100 bg-dark-custom border border-secondary"></canvas>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+    <script src="js/index.js"></script>	
+</body>
