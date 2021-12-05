@@ -1,4 +1,4 @@
-# TI Innovator HUB Data Aquisition Tool (TI-82)
+<h1 align="center">TI Innovator HUB Data Aquisition Tool<br/>Team TI-82<br/>Cameron Dennis, John Douthit, William Jarratt, Christian Offodile</h1>
 
 ## Table of Contents
 
