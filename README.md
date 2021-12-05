@@ -32,7 +32,7 @@ Our goal was to create an inexpensive add-on for the TI Innovator HUB that provi
 
 ##  User Guide and Theory of Operation
 
-Please see [this folder](https://github.ncsu.edu/cedenni2/ti_82/tree/master/project_files).
+Please see [this folder](./project_files/).
 
 ## Folder Descriptions
 
