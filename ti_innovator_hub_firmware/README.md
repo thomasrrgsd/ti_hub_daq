@@ -17,7 +17,7 @@ The TI Innovator HUB is the center of this project. Each module connects to the 
 ## Software
 
 The firmware for the TI Innovator HUB was written with Code Composer Studio (CCS) 10.4. This project uses software abstraction layers from the driverlib package. The project requires [driverlib](https://www.ti.com/tool/MSPDRIVERLIB) to run. Addtionally, the TI Innovator HUB contains an MSP432P401R and so in order to flash the HUB, you must have the MSP432 drivers installed.
-It is intended that the CCS project files will be converted into a TI Innovator HUB sketch in the future to allow flashing with the sketch using the appropriate tool. The firmware utilizes many of the HUBs internal peripherals to perform its functions. The UART, I2C, DMA, ADC, TIMER_A, and Interrupt vectors are used. The theory of operation is not covered here, but is instead found in the [project_files folder](https://github.ncsu.edu/cedenni2/ti_82/tree/master/project_files).
+It is intended that the CCS project files will be converted into a TI Innovator HUB sketch in the future to allow flashing with the sketch using the appropriate tool. The firmware utilizes many of the HUBs internal peripherals to perform its functions. The UART, I2C, DMA, ADC, TIMER_A, and Interrupt vectors are used. The theory of operation is not covered here, but is instead found in the [project_files folder](https://github.com/thomasrrgsd/ti_hub_daq/tree/main/project_files).
 
 ## Hardware
 
